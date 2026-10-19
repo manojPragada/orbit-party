@@ -1,3 +1,46 @@
-import {satellites,coordinate,project,track} from './model.js';const $=s=>document.querySelector(s);let selected=satellites[0],playing=false,last=0;
-function render(){const phase=Number($('#phase').value);$('#list').replaceChildren();for(const s of satellites){const b=document.createElement('button');b.textContent=s.name;b.setAttribute('aria-pressed',String(s===selected));b.onclick=()=>{selected=s;render();};$('#list').append(b);}const ns='http://www.w3.org/2000/svg';$('#tracks').replaceChildren();const path=document.createElementNS(ns,'path');path.setAttribute('class','trail');path.setAttribute('d',track(selected).map((p,i)=>(i?'L':'M')+p.join(',')).join(' '));$('#tracks').append(path);$('#markers').replaceChildren();const c=coordinate(selected,phase),p=project(c);const dot=document.createElementNS(ns,'circle');dot.setAttribute('cx',p[0]);dot.setAttribute('cy',p[1]);dot.setAttribute('r',8);dot.setAttribute('class','marker');$('#markers').append(dot);$('#name').textContent=selected.name;$('#kind').textContent='Illustrative latitude amplitude: '+selected.inclination+'°';$('#coordinates').textContent=c[1].toFixed(1)+'° / '+c[0].toFixed(1)+'°';}
-$('#phase').oninput=render;$('#play').onclick=()=>{playing=!playing;$('#play').setAttribute('aria-pressed',String(playing));$('#play').textContent=playing?'Pause illustration':'Play illustration';};function tick(t){if(playing&&t-last>70){$('#phase').value=(Number($('#phase').value)+1)%360;render();last=t;}requestAnimationFrame(tick);}render();if(!matchMedia('(prefers-reduced-motion: reduce)').matches)requestAnimationFrame(tick);else $('#play').disabled=true;
+import { satellites, coordinate, project, track, advancePhase } from './model.js';
+const $ = selector => document.querySelector(selector);
+const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+let selected = satellites[0], playing = false, previous = null, frame = null;
+const ns = 'http://www.w3.org/2000/svg';
+const dot = document.createElementNS(ns, 'circle'); dot.setAttribute('r',8); dot.setAttribute('class','marker'); $('#markers').append(dot);
+function drawPosition() {
+  const coordinates = coordinate(selected,Number($('#phase').value)), point = project(coordinates);
+  dot.setAttribute('cx',point[0]); dot.setAttribute('cy',point[1]);
+  $('#coordinates').textContent = coordinates[1].toFixed(1)+'° / '+coordinates[0].toFixed(1)+'°';
+}
+function renderSelection() {
+  for (const button of $('#list').children) button.setAttribute('aria-pressed',String(button.dataset.satellite===selected.id));
+  const path = document.createElementNS(ns,'path'); path.setAttribute('class','trail');
+  path.setAttribute('d',track(selected).map((point,i)=>(i?'L':'M')+point.join(',')).join(' ')); $('#tracks').replaceChildren(path);
+  $('#name').textContent = selected.name;
+  $('#kind').textContent = 'Illustrative latitude amplitude: '+selected.inclination+'°'; drawPosition();
+}
+for (const satellite of satellites) {
+  const button = document.createElement('button'); button.dataset.satellite=satellite.id; button.textContent=satellite.name;
+  button.addEventListener('click',()=>{selected=satellite;renderSelection();}); $('#list').append(button);
+}
+function stop(message='Illustration paused.') {
+  playing=false;previous=null;if(frame!==null)cancelAnimationFrame(frame);frame=null;
+  $('#play').textContent='Play illustration';$('#play').setAttribute('aria-pressed','false');$('#playback-status').textContent=message;
+}
+function tick(time) {
+  if(!playing)return;
+  if(previous!==null)$('#phase').value=advancePhase(Number($('#phase').value),time-previous);
+  previous=time;drawPosition();frame=requestAnimationFrame(tick);
+}
+function motionPreference() {
+  if(reduced.matches)stop('Reduced motion enabled. Use the phase slider or phase-step buttons.');
+  $('#play').disabled=reduced.matches;
+}
+$('#play').addEventListener('click',()=>{
+  if(playing)return stop();if(reduced.matches)return;
+  playing=true;previous=null;$('#play').textContent='Pause illustration';$('#play').setAttribute('aria-pressed','true');
+  $('#playback-status').textContent='Playing an artistic track, not a predicted satellite position.';frame=requestAnimationFrame(tick);
+});
+$('#phase').addEventListener('input',()=>{stop();drawPosition();});
+for(const [id,delta] of [['#step-back',-15],['#step-forward',15]])$(id).addEventListener('click',()=>{
+  stop();$('#phase').value=((Number($('#phase').value)+delta)%360+360)%360;drawPosition();
+});
+document.addEventListener('visibilitychange',()=>{if(document.hidden)stop('Illustration paused while this tab is hidden.');});
+reduced.addEventListener('change',motionPreference);renderSelection();motionPreference();

@@ -1,3 +1,7 @@
-import {test} from 'node:test';import assert from 'node:assert/strict';import {satellites,coordinate,track} from '../src/model.js';
+import {test} from 'node:test';import assert from 'node:assert/strict';import {satellites,coordinate,track,advancePhase} from '../src/model.js';
 test('coordinates are periodic and latitude bounded',()=>{for(const s of satellites){assert.deepEqual(coordinate(s,45),coordinate(s,405));for(let i=-360;i<720;i+=15)assert.ok(Math.abs(coordinate(s,i)[1])<=s.inclination);}});
 test('ground track is finite and within viewbox',()=>{for(const p of track(satellites[0])){assert.ok(p.every(Number.isFinite));assert.ok(p[0]>=0&&p[0]<=800&&p[1]>=0&&p[1]<=400);}});
+
+
+test('ground track never jumps back across the map seam',()=>{for(const satellite of satellites){const points=track(satellite);assert.equal(points[0][0],0);assert.equal(points.at(-1)[0],800);for(let i=1;i<points.length;i++)assert.ok(points[i][0]-points[i-1][0]>0&&points[i][0]-points[i-1][0]<12);}});
+test('phase advancement is time-based, periodic and bounded',()=>{assert.ok(Math.abs(advancePhase(0,700)-10)<1e-9);assert.ok(Math.abs(advancePhase(355,700)-5)<1e-9);assert.equal(advancePhase(50,-100),50);assert.equal(advancePhase(NaN,100),0);assert.ok(advancePhase(0,100000)<15);});
