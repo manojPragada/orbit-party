@@ -10,3 +10,4 @@ export function advancePhase(phase, elapsedMs) {
   return ((phase + Math.max(0, Math.min(elapsedMs,1000))/70)%360+360)%360;
 }
 
+

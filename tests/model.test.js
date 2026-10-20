@@ -5,3 +5,4 @@ test('ground track is finite and within viewbox',()=>{for(const p of track(satel
 
 test('ground track never jumps back across the map seam',()=>{for(const satellite of satellites){const points=track(satellite);assert.equal(points[0][0],0);assert.equal(points.at(-1)[0],800);for(let i=1;i<points.length;i++)assert.ok(points[i][0]-points[i-1][0]>0&&points[i][0]-points[i-1][0]<12);}});
 test('phase advancement is time-based, periodic and bounded',()=>{assert.ok(Math.abs(advancePhase(0,700)-10)<1e-9);assert.ok(Math.abs(advancePhase(355,700)-5)<1e-9);assert.equal(advancePhase(50,-100),50);assert.equal(advancePhase(NaN,100),0);assert.ok(advancePhase(0,100000)<15);});
+

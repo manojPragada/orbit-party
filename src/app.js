@@ -44,3 +44,4 @@ for(const [id,delta] of [['#step-back',-15],['#step-forward',15]])$(id).addEvent
 });
 document.addEventListener('visibilitychange',()=>{if(document.hidden)stop('Illustration paused while this tab is hidden.');});
 reduced.addEventListener('change',motionPreference);renderSelection();motionPreference();
+
