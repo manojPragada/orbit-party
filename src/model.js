@@ -9,5 +9,14 @@ export function advancePhase(phase, elapsedMs) {
   if (!Number.isFinite(phase) || !Number.isFinite(elapsedMs)) return 0;
   return ((phase + Math.max(0, Math.min(elapsedMs,1000))/70)%360+360)%360;
 }
+export function viewFromURL(value) {
+  try {
+    const params=new URL(value,'https://orbit.invalid/').searchParams;
+    const satellite=satellites.find(item=>item.id===params.get('satellite'))??satellites[0];
+    const raw=Number(params.get('phase'));const phase=Number.isFinite(raw)?((raw%360)+360)%360:0;
+    return {satellite,phase};
+  } catch { return {satellite:satellites[0],phase:0}; }
+}
+
 
 

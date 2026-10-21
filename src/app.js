@@ -1,7 +1,9 @@
-import { satellites, coordinate, project, track, advancePhase } from './model.js';
+import { satellites, coordinate, project, track, advancePhase, viewFromURL } from './model.js';
 const $ = selector => document.querySelector(selector);
 const reduced = matchMedia('(prefers-reduced-motion: reduce)');
-let selected = satellites[0], playing = false, previous = null, frame = null;
+const initial=viewFromURL(location.href);let selected = initial.satellite, playing = false, previous = null, frame = null;
+$('#phase').value=initial.phase;
+function syncURL(){const url=new URL(location.href);url.searchParams.set('satellite',selected.id);url.searchParams.set('phase',Math.round(Number($('#phase').value)));history.replaceState(null,'',url);}
 const ns = 'http://www.w3.org/2000/svg';
 const dot = document.createElementNS(ns, 'circle'); dot.setAttribute('r',8); dot.setAttribute('class','marker'); $('#markers').append(dot);
 function drawPosition() {
@@ -18,7 +20,7 @@ function renderSelection() {
 }
 for (const satellite of satellites) {
   const button = document.createElement('button'); button.dataset.satellite=satellite.id; button.textContent=satellite.name;
-  button.addEventListener('click',()=>{selected=satellite;renderSelection();}); $('#list').append(button);
+  button.addEventListener('click',()=>{selected=satellite;renderSelection();syncURL();}); $('#list').append(button);
 }
 function stop(message='Illustration paused.') {
   playing=false;previous=null;if(frame!==null)cancelAnimationFrame(frame);frame=null;
@@ -38,10 +40,11 @@ $('#play').addEventListener('click',()=>{
   playing=true;previous=null;$('#play').textContent='Pause illustration';$('#play').setAttribute('aria-pressed','true');
   $('#playback-status').textContent='Playing an artistic track, not a predicted satellite position.';frame=requestAnimationFrame(tick);
 });
-$('#phase').addEventListener('input',()=>{stop();drawPosition();});
+$('#phase').addEventListener('input',()=>{stop();drawPosition();syncURL();});
 for(const [id,delta] of [['#step-back',-15],['#step-forward',15]])$(id).addEventListener('click',()=>{
-  stop();$('#phase').value=((Number($('#phase').value)+delta)%360+360)%360;drawPosition();
+  stop();$('#phase').value=((Number($('#phase').value)+delta)%360+360)%360;drawPosition();syncURL();
 });
 document.addEventListener('visibilitychange',()=>{if(document.hidden)stop('Illustration paused while this tab is hidden.');});
 reduced.addEventListener('change',motionPreference);renderSelection();motionPreference();
+
 

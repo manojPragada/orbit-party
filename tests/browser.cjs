@@ -10,6 +10,8 @@ async function scenario(page,base,reduced){
 
   await page.locator('#list button').nth(1).click();assert.equal(await page.locator('#name').textContent(),'Polar explorer');
   const before=await page.locator('#phase').inputValue();await page.locator('#step-forward').click();assert.equal(Number(await page.locator('#phase').inputValue()),(Number(before)+15)%360);
+  assert.match(page.url(),/satellite=polar-demo/);assert.match(page.url(),/phase=/);
+  await page.goto(base+'?satellite=equator-demo&phase=90');assert.equal(await page.locator('#name').textContent(),'Equatorial drifter');assert.equal(await page.locator('#phase').inputValue(),'90');
   if(reduced)assert.equal(await page.locator('#play').isDisabled(),true);
   else{await page.locator('#play').click();await page.waitForFunction(value=>Number(document.querySelector('#phase').value)>value,Number(before)+15);await page.locator('#play').click();}
 
@@ -53,3 +55,4 @@ async function main(){
   }finally{if(browser)await browser.close();await new Promise(resolve=>server.close(resolve));}
 }
 main().catch(error=>{console.error(error);process.exitCode=1;});
+

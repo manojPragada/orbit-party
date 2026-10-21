@@ -18,6 +18,8 @@ Open http://127.0.0.1:8000. Keep the terminal running; Ctrl+C stops it. Serve ov
 
 ## Controls
 
+Satellite selection and manually adjusted phase are reflected in the URL (`?satellite=polar-demo&phase=90`) for shareable artistic views. Invalid satellite IDs fall back to the first illustration and phase wraps into 0–359°. These parameters describe illustrative coordinates—not observed or predicted positions.
+
 Select a satellite and adjust the phase slider or ±15° buttons. Playback advances the illustrative position using elapsed time without rebuilding the satellite controls. It pauses when the tab is hidden. Reduced-motion preferences disable animation while preserving manual controls, including when preferences change while open. Tracks terminate at the map seam instead of drawing a spurious cross-map segment.
 
 ## Project structure
@@ -90,5 +92,6 @@ Use small, reviewable changes with a clear user benefit. Add model tests when be
 ## License
 
 A redistribution license has not yet been selected. Public visibility alone does not grant an open-source license.
+
 
 
