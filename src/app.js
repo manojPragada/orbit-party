@@ -1,4 +1,4 @@
-import { satellites, coordinate, project, track, advancePhase, viewFromURL } from './model.js';
+import { satellites, observers, coordinate, project, track, advancePhase, viewFromURL, angularSeparation } from './model.js';
 const $ = selector => document.querySelector(selector);
 const reduced = matchMedia('(prefers-reduced-motion: reduce)');
 const initial=viewFromURL(location.href);let selected = initial.satellite, playing = false, previous = null, frame = null;
@@ -6,10 +6,15 @@ $('#phase').value=initial.phase;
 function syncURL(){const url=new URL(location.href);url.searchParams.set('satellite',selected.id);url.searchParams.set('phase',Math.round(Number($('#phase').value)));history.replaceState(null,'',url);}
 const ns = 'http://www.w3.org/2000/svg';
 const dot = document.createElementNS(ns, 'circle'); dot.setAttribute('r',8); dot.setAttribute('class','marker'); $('#markers').append(dot);
+const observerDot=document.createElementNS(ns,'circle');observerDot.setAttribute('r',5);observerDot.setAttribute('class','observer-marker');$('#markers').append(observerDot);
+const observerLabel=document.createElement('label');observerLabel.textContent='Observer ';const observerSelect=document.createElement('select');observerSelect.id='observer';for(const item of observers){const option=document.createElement('option');option.value=item.id;option.textContent=item.name;observerSelect.append(option);}observerLabel.append(observerSelect);$('.controls').append(observerLabel);
+const separation=document.createElement('p');separation.id='separation';separation.className='status';separation.setAttribute('aria-live','polite');$('#coordinates').after(separation);
 function drawPosition() {
   const coordinates = coordinate(selected,Number($('#phase').value)), point = project(coordinates);
   dot.setAttribute('cx',point[0]); dot.setAttribute('cy',point[1]);
   $('#coordinates').textContent = coordinates[1].toFixed(1)+'° / '+coordinates[0].toFixed(1)+'°';
+  const observer=observers.find(item=>item.id===$('#observer').value)??observers[0],observerPoint=project(observer.coordinate);observerDot.setAttribute('cx',observerPoint[0]);observerDot.setAttribute('cy',observerPoint[1]);
+  $('#separation').textContent=`${angularSeparation(observer.coordinate,coordinates).toFixed(1)}° artistic ground separation from ${observer.name} · not a pass prediction`;
 }
 function renderSelection() {
   for (const button of $('#list').children) button.setAttribute('aria-pressed',String(button.dataset.satellite===selected.id));
@@ -41,6 +46,7 @@ $('#play').addEventListener('click',()=>{
   $('#playback-status').textContent='Playing an artistic track, not a predicted satellite position.';frame=requestAnimationFrame(tick);
 });
 $('#phase').addEventListener('input',()=>{stop();drawPosition();syncURL();});
+$('#observer').addEventListener('change',drawPosition);
 for(const [id,delta] of [['#step-back',-15],['#step-forward',15]])$(id).addEventListener('click',()=>{
   stop();$('#phase').value=((Number($('#phase').value)+delta)%360+360)%360;drawPosition();syncURL();
 });

@@ -14,6 +14,8 @@
 
 ## Continuity
 
+2026-10-21: Added Toronto, Hyderabad and Sydney observer markers with spherical angular separation from each artistic position. The interface explicitly labels the result as illustrative and not a pass prediction; no times, visibility or live coordinates are inferred. Next: real observer/pass work only after verified TLE data and SGP4 propagation.
+
 2026-10-21: Added validated shareable satellite/phase URLs with normalized phase and browser coverage. Links preserve artistic state only and do not imply observed or predicted positions. Next: proper orbital propagation and observer inputs after verifying a data source.
 
 2026-10-20: Added repeatable Playwright regression checks and a public-repository-only CI workflow. Desktop, mobile and motion-enabled scenarios passed locally using Chromium 153; model tests and syntax checks passed. Screenshots generated locally for inspection. Earlier browser-unavailable notes below are historical. No deployment or live-provider validation performed. Next: expand browser coverage and review the existing PR before merging.

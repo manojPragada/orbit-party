@@ -7,6 +7,7 @@ const {chromium}=require(process.env.PLAYWRIGHT_MODULE_PATH||'playwright');
 const root=path.resolve(__dirname,'..');
 const mime={'.html':'text/html','.css':'text/css','.js':'text/javascript','.geojson':'application/geo+json'};
 async function scenario(page,base,reduced){
+  await page.locator('#observer').selectOption('sydney');assert.match(await page.locator('#separation').textContent(),/Sydney · not a pass prediction/);
 
   await page.locator('#list button').nth(1).click();assert.equal(await page.locator('#name').textContent(),'Polar explorer');
   const before=await page.locator('#phase').inputValue();await page.locator('#step-forward').click();assert.equal(Number(await page.locator('#phase').inputValue()),(Number(before)+15)%360);

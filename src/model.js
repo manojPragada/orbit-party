@@ -1,4 +1,5 @@
 export const satellites=[{id:'iss-demo',name:'ISS / illustration',inclination:51.6,offset:0},{id:'polar-demo',name:'Polar explorer',inclination:82,offset:70},{id:'equator-demo',name:'Equatorial drifter',inclination:12,offset:150}];
+export const observers=[{id:'toronto',name:'Toronto',coordinate:[-79.38,43.65]},{id:'hyderabad',name:'Hyderabad',coordinate:[78.49,17.39]},{id:'sydney',name:'Sydney',coordinate:[151.21,-33.87]}];
 export function coordinate(satellite,phase){const angle=((phase+satellite.offset)%360+360)%360;return [angle-180,Math.sin(angle*Math.PI/180)*satellite.inclination];}
 export function project([lon,lat]){return [(lon+180)/360*800,(90-lat)/180*400];}
 export function track(satellite) {
@@ -17,6 +18,7 @@ export function viewFromURL(value) {
     return {satellite,phase};
   } catch { return {satellite:satellites[0],phase:0}; }
 }
+export function angularSeparation([lonA,latA],[lonB,latB]){const rad=Math.PI/180;const a=latA*rad,b=latB*rad,delta=(lonB-lonA)*rad;const cosine=Math.sin(a)*Math.sin(b)+Math.cos(a)*Math.cos(b)*Math.cos(delta);return Math.acos(Math.max(-1,Math.min(1,cosine)))/rad;}
 
 
 
