@@ -5,3 +5,4 @@
 
 
 
+.coordinate-inputs{display:flex;flex-wrap:wrap;gap:.65rem;align-items:end}.coordinate-inputs label{display:grid;gap:.25rem}.coordinate-inputs input{width:8rem}

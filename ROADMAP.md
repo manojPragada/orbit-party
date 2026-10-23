@@ -14,6 +14,8 @@
 
 ## Continuity
 
+2026-10-22: Added validated, session-only custom observer coordinates while preserving preset locations. The map reports only spherical angular separation from the artistic ground point; it does not calculate range, elevation, visibility, pass times or observed positions. Next: add real observer/pass work only with verified TLE data and SGP4 propagation.
+
 2026-10-21: Added Toronto, Hyderabad and Sydney observer markers with spherical angular separation from each artistic position. The interface explicitly labels the result as illustrative and not a pass prediction; no times, visibility or live coordinates are inferred. Next: real observer/pass work only after verified TLE data and SGP4 propagation.
 
 2026-10-21: Added validated shareable satellite/phase URLs with normalized phase and browser coverage. Links preserve artistic state only and do not imply observed or predicted positions. Next: proper orbital propagation and observer inputs after verifying a data source.

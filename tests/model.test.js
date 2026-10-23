@@ -1,4 +1,4 @@
-import {test} from 'node:test';import assert from 'node:assert/strict';import {satellites,coordinate,track,advancePhase,viewFromURL,angularSeparation} from '../src/model.js';
+import {test} from 'node:test';import assert from 'node:assert/strict';import {satellites,coordinate,track,advancePhase,viewFromURL,angularSeparation,customObserver} from '../src/model.js';
 test('coordinates are periodic and latitude bounded',()=>{for(const s of satellites){assert.deepEqual(coordinate(s,45),coordinate(s,405));for(let i=-360;i<720;i+=15)assert.ok(Math.abs(coordinate(s,i)[1])<=s.inclination);}});
 test('ground track is finite and within viewbox',()=>{for(const p of track(satellites[0])){assert.ok(p.every(Number.isFinite));assert.ok(p[0]>=0&&p[0]<=800&&p[1]>=0&&p[1]<=400);}});
 
@@ -7,5 +7,6 @@ test('ground track never jumps back across the map seam',()=>{for(const satellit
 test('phase advancement is time-based, periodic and bounded',()=>{assert.ok(Math.abs(advancePhase(0,700)-10)<1e-9);assert.ok(Math.abs(advancePhase(355,700)-5)<1e-9);assert.equal(advancePhase(50,-100),50);assert.equal(advancePhase(NaN,100),0);assert.ok(advancePhase(0,100000)<15);});
 test('shareable views accept known satellites and normalize phase',()=>{assert.equal(viewFromURL('/?satellite=polar-demo&phase=390').satellite.id,'polar-demo');assert.equal(viewFromURL('/?satellite=polar-demo&phase=390').phase,30);assert.equal(viewFromURL('/?satellite=unknown&phase=oops').satellite.id,'iss-demo');assert.equal(viewFromURL('/?phase=-15').phase,345);});
 test('artistic ground separation is spherical, symmetric and bounded',()=>{assert.equal(angularSeparation([0,0],[0,0]),0);assert.ok(Math.abs(angularSeparation([0,0],[180,0])-180)<1e-9);assert.ok(Math.abs(angularSeparation([10,20],[-40,50])-angularSeparation([-40,50],[10,20]))<1e-9);});
+test('custom observer coordinates are finite and geographically bounded',()=>{assert.deepEqual(customObserver('-79.38','43.65').coordinate,[-79.38,43.65]);assert.equal(customObserver('',0),null);assert.equal(customObserver(181,0),null);assert.equal(customObserver(0,-91),null);assert.equal(customObserver('north',10),null);});
 
 
