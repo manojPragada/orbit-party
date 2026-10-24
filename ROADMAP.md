@@ -14,6 +14,8 @@
 
 ## Continuity
 
+2026-10-23: Replaced ambiguous signed coordinate output with accessible latitude/longitude cardinal formatting while preserving the explicit artistic-position disclaimer. Next: no pass or visibility claims until verified TLE and SGP4 work exists.
+
 2026-10-22: Added validated, session-only custom observer coordinates while preserving preset locations. The map reports only spherical angular separation from the artistic ground point; it does not calculate range, elevation, visibility, pass times or observed positions. Next: add real observer/pass work only with verified TLE data and SGP4 propagation.
 
 2026-10-21: Added Toronto, Hyderabad and Sydney observer markers with spherical angular separation from each artistic position. The interface explicitly labels the result as illustrative and not a pass prediction; no times, visibility or live coordinates are inferred. Next: real observer/pass work only after verified TLE data and SGP4 propagation.

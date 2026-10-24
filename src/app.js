@@ -1,4 +1,4 @@
-import { satellites, observers, coordinate, project, track, advancePhase, viewFromURL, angularSeparation, customObserver } from './model.js';
+import { satellites, observers, coordinate, project, track, advancePhase, viewFromURL, angularSeparation, customObserver, formatCoordinate } from './model.js';
 const $ = selector => document.querySelector(selector);
 const reduced = matchMedia('(prefers-reduced-motion: reduce)');
 const initial=viewFromURL(location.href);let selected = initial.satellite, playing = false, previous = null, frame = null, appliedObserver = null;
@@ -13,7 +13,7 @@ const separation=document.createElement('p');separation.id='separation';separati
 function drawPosition() {
   const coordinates = coordinate(selected,Number($('#phase').value)), point = project(coordinates);
   dot.setAttribute('cx',point[0]); dot.setAttribute('cy',point[1]);
-  $('#coordinates').textContent = coordinates[1].toFixed(1)+'° / '+coordinates[0].toFixed(1)+'°';
+  $('#coordinates').textContent = formatCoordinate(coordinates);
   const observer=appliedObserver??observers.find(item=>item.id===$('#observer').value)??observers[0],observerPoint=project(observer.coordinate);observerDot.setAttribute('cx',observerPoint[0]);observerDot.setAttribute('cy',observerPoint[1]);
   $('#separation').textContent=`${angularSeparation(observer.coordinate,coordinates).toFixed(1)}° artistic ground separation from ${observer.name} · not a pass prediction`;
 }
