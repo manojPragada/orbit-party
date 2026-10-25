@@ -2,6 +2,7 @@
 
 :root{--accent:#b8a0ff}.map{background:radial-gradient(ellipse,#29254c,#0b101f 70%)}
 .observer-marker{fill:#ffcf78;stroke:#0b101f;stroke-width:2;stroke-dasharray:2 1}
+.terminator{stroke:#ffcf78;stroke-width:2;stroke-dasharray:8 7;opacity:.55}
 
 
 

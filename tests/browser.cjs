@@ -14,7 +14,7 @@ async function scenario(page,base,reduced){
   await page.locator('#list button').nth(1).click();assert.equal(await page.locator('#name').textContent(),'Polar explorer');
   const before=await page.locator('#phase').inputValue();await page.locator('#step-forward').click();assert.equal(Number(await page.locator('#phase').inputValue()),(Number(before)+15)%360);
   assert.match(page.url(),/satellite=polar-demo/);assert.match(page.url(),/phase=/);
-  await page.goto(base+'?satellite=equator-demo&phase=90');assert.equal(await page.locator('#name').textContent(),'Equatorial drifter');assert.equal(await page.locator('#phase').inputValue(),'90');
+  await page.goto(base+'?satellite=equator-demo&phase=90');assert.equal(await page.locator('#name').textContent(),'Equatorial drifter');assert.equal(await page.locator('#phase').inputValue(),'90');assert.equal(await page.locator('#terminator').getAttribute('x1'),'200');
   if(reduced)assert.equal(await page.locator('#play').isDisabled(),true);
   else{await page.locator('#play').click();await page.waitForFunction(value=>Number(document.querySelector('#phase').value)>value,Number(before)+15);await page.locator('#play').click();}
 
