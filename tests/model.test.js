@@ -1,4 +1,5 @@
 import {test} from 'node:test';import assert from 'node:assert/strict';import {satellites,coordinate,track,advancePhase,viewFromURL,angularSeparation,customObserver,formatCoordinate,artisticTerminatorX} from '../src/model.js';
+import {artisticPhaseLabel} from '../src/model.js';
 test('coordinates are periodic and latitude bounded',()=>{for(const s of satellites){assert.deepEqual(coordinate(s,45),coordinate(s,405));for(let i=-360;i<720;i+=15)assert.ok(Math.abs(coordinate(s,i)[1])<=s.inclination);}});
 test('ground track is finite and within viewbox',()=>{for(const p of track(satellites[0])){assert.ok(p.every(Number.isFinite));assert.ok(p[0]>=0&&p[0]<=800&&p[1]>=0&&p[1]<=400);}});
 
@@ -10,5 +11,6 @@ test('artistic ground separation is spherical, symmetric and bounded',()=>{asser
 test('custom observer coordinates are finite and geographically bounded',()=>{assert.deepEqual(customObserver('-79.38','43.65').coordinate,[-79.38,43.65]);assert.equal(customObserver('',0),null);assert.equal(customObserver(181,0),null);assert.equal(customObserver(0,-91),null);assert.equal(customObserver('north',10),null);});
 test('coordinates are readable with cardinal directions',()=>{assert.equal(formatCoordinate([-79.38,43.65]),'43.6°N / 79.4°W');assert.equal(formatCoordinate([151.21,-33.87]),'33.9°S / 151.2°E');});
 test('artistic boundary wraps with phase',()=>{assert.equal(artisticTerminatorX(0),0);assert.equal(artisticTerminatorX(180),400);assert.equal(artisticTerminatorX(450),200);assert.equal(artisticTerminatorX('bad'),0);});
+test('artistic phase labels are deterministic and never visibility claims',()=>{assert.equal(artisticPhaseLabel(0),'ascending illustration');assert.equal(artisticPhaseLabel(180),'descending illustration');assert.equal(artisticPhaseLabel(450),'high-latitude illustration');assert.equal(artisticPhaseLabel('bad'),'unknown');});
 
 

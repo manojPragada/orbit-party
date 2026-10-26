@@ -14,6 +14,8 @@
 
 ## Continuity
 
+2026-10-25: Added deterministic artistic phase-sector labels alongside observer separation, explicitly avoiding elevation, visibility or pass claims. Next: verified TLE/SGP4 work before any real orbital claim.
+
 2026-10-24: Added a phase-linked schematic light boundary to the map, explicitly kept within the artistic illustration rather than presenting a calculated solar terminator. Next: verified TLE/SGP4 work before any real position, pass or illumination claims.
 
 2026-10-23: Replaced ambiguous signed coordinate output with accessible latitude/longitude cardinal formatting while preserving the explicit artistic-position disclaimer. Next: no pass or visibility claims until verified TLE and SGP4 work exists.
