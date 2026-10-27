@@ -22,6 +22,7 @@ export function angularSeparation([lonA,latA],[lonB,latB]){const rad=Math.PI/180
 export function formatCoordinate([lon,lat]){const latitude=`${Math.abs(lat).toFixed(1)}°${lat<0?'S':'N'}`,longitude=`${Math.abs(lon).toFixed(1)}°${lon<0?'W':'E'}`;return `${latitude} / ${longitude}`;}
 export function artisticTerminatorX(phase){const value=Number(phase);return Number.isFinite(value)?(((value%360)+360)%360)/360*800:0;}
 export function artisticPhaseLabel(phase){const value=Number(phase);if(!Number.isFinite(value))return 'unknown';const angle=((value%360)+360)%360;return ['ascending illustration','high-latitude illustration','descending illustration','equatorial return illustration'][Math.floor(angle/90)];}
+export function artisticLatitudeTrend(phase){const value=Number(phase);if(!Number.isFinite(value))return 'unknown trend';const angle=((value%360)+360)%360;return angle<90||angle>=270?'moving north in illustration':'moving south in illustration';}
 export function customObserver(longitude,latitude){
   if(longitude===''||latitude==='')return null;
   const lon=Number(longitude),lat=Number(latitude);
