@@ -23,6 +23,7 @@ export function formatCoordinate([lon,lat]){const latitude=`${Math.abs(lat).toFi
 export function artisticTerminatorX(phase){const value=Number(phase);return Number.isFinite(value)?(((value%360)+360)%360)/360*800:0;}
 export function artisticPhaseLabel(phase){const value=Number(phase);if(!Number.isFinite(value))return 'unknown';const angle=((value%360)+360)%360;return ['ascending illustration','high-latitude illustration','descending illustration','equatorial return illustration'][Math.floor(angle/90)];}
 export function artisticLatitudeTrend(phase){const value=Number(phase);if(!Number.isFinite(value))return 'unknown trend';const angle=((value%360)+360)%360;return angle<90||angle>=270?'moving north in illustration':'moving south in illustration';}
+export function artisticOrbitProgress(phase){const value=Number(phase);return Number.isFinite(value)?Math.round((((value%360)+360)%360)/360*100):0;}
 export function customObserver(longitude,latitude){
   if(longitude===''||latitude==='')return null;
   const lon=Number(longitude),lat=Number(latitude);

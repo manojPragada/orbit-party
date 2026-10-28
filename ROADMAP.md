@@ -14,6 +14,8 @@
 
 ## Continuity
 
+2026-10-27: Added normalized artistic-orbit progress while preserving explicit non-prediction wording. Next: verified TLE/SGP4 work before any real orbital claim.
+
 2026-10-26: Added a deterministic north/south latitude-trend label for the artistic orbit, explicitly separate from propagation and pass prediction. Next: verified TLE/SGP4 work before any real orbital claim.
 
 2026-10-25: Added deterministic artistic phase-sector labels alongside observer separation, explicitly avoiding elevation, visibility or pass claims. Next: verified TLE/SGP4 work before any real orbital claim.
