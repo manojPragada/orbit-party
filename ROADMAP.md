@@ -14,6 +14,8 @@
 
 ## Continuity
 
+2026-10-29: Added an explicitly artistic hemisphere/equator label derived from the illustration only. Next: verified TLE/SGP4 work before any real orbital claim.
+
 2026-10-28: Added normalized remaining-cycle context to the explicitly artistic orbit status. Next: verified TLE/SGP4 work before any real orbital claim.
 
 2026-10-27: Added normalized artistic-orbit progress while preserving explicit non-prediction wording. Next: verified TLE/SGP4 work before any real orbital claim.

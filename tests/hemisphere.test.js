@@ -1,0 +1,2 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {artisticHemisphere} from '../src/model.js';
+test('artistic hemisphere is descriptive and bounded',()=>{assert.equal(artisticHemisphere([0,20]),'artistic northern hemisphere');assert.equal(artisticHemisphere([0,-20]),'artistic southern hemisphere');assert.equal(artisticHemisphere([0,0]),'artistic equator');assert.equal(artisticHemisphere(null),'artistic equator');});

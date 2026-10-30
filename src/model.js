@@ -25,6 +25,7 @@ export function artisticPhaseLabel(phase){const value=Number(phase);if(!Number.i
 export function artisticLatitudeTrend(phase){const value=Number(phase);if(!Number.isFinite(value))return 'unknown trend';const angle=((value%360)+360)%360;return angle<90||angle>=270?'moving north in illustration':'moving south in illustration';}
 export function artisticOrbitProgress(phase){const value=Number(phase);return Number.isFinite(value)?Math.round((((value%360)+360)%360)/360*100):0;}
 export function artisticOrbitRemaining(phase){return 100-artisticOrbitProgress(phase);}
+export function artisticHemisphere(coordinates){const latitude=Number(coordinates?.[1]);if(!Number.isFinite(latitude)||Math.abs(latitude)<.05)return 'artistic equator';return latitude>0?'artistic northern hemisphere':'artistic southern hemisphere';}
 export function customObserver(longitude,latitude){
   if(longitude===''||latitude==='')return null;
   const lon=Number(longitude),lat=Number(latitude);

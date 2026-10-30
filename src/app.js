@@ -1,4 +1,4 @@
-import { satellites, observers, coordinate, project, track, advancePhase, viewFromURL, angularSeparation, customObserver, formatCoordinate, artisticTerminatorX, artisticPhaseLabel, artisticLatitudeTrend, artisticOrbitProgress, artisticOrbitRemaining } from './model.js';
+import { satellites, observers, coordinate, project, track, advancePhase, viewFromURL, angularSeparation, customObserver, formatCoordinate, artisticTerminatorX, artisticPhaseLabel, artisticLatitudeTrend, artisticOrbitProgress, artisticOrbitRemaining, artisticHemisphere } from './model.js';
 const $ = selector => document.querySelector(selector);
 const reduced = matchMedia('(prefers-reduced-motion: reduce)');
 const initial=viewFromURL(location.href);let selected = initial.satellite, playing = false, previous = null, frame = null, appliedObserver = null;
@@ -17,7 +17,7 @@ function drawPosition() {
   dot.setAttribute('cx',point[0]); dot.setAttribute('cy',point[1]);
   $('#coordinates').textContent = formatCoordinate(coordinates);
   const observer=appliedObserver??observers.find(item=>item.id===$('#observer').value)??observers[0],observerPoint=project(observer.coordinate);observerDot.setAttribute('cx',observerPoint[0]);observerDot.setAttribute('cy',observerPoint[1]);
-  $('#separation').textContent=`${angularSeparation(observer.coordinate,coordinates).toFixed(1)}° artistic ground separation from ${observer.name} · ${artisticOrbitProgress($('#phase').value)}% complete / ${artisticOrbitRemaining($('#phase').value)}% remaining · ${artisticPhaseLabel($('#phase').value)} · ${artisticLatitudeTrend($('#phase').value)} · not a pass prediction`;
+  $('#separation').textContent=`${angularSeparation(observer.coordinate,coordinates).toFixed(1)}° artistic ground separation from ${observer.name} · ${artisticHemisphere(coordinates)} · ${artisticOrbitProgress($('#phase').value)}% complete / ${artisticOrbitRemaining($('#phase').value)}% remaining · ${artisticPhaseLabel($('#phase').value)} · ${artisticLatitudeTrend($('#phase').value)} · not a pass prediction`;
 }
 function renderSelection() {
   for (const button of $('#list').children) button.setAttribute('aria-pressed',String(button.dataset.satellite===selected.id));
