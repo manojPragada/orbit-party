@@ -26,6 +26,7 @@ export function artisticLatitudeTrend(phase){const value=Number(phase);if(!Numbe
 export function artisticOrbitProgress(phase){const value=Number(phase);return Number.isFinite(value)?Math.round((((value%360)+360)%360)/360*100):0;}
 export function artisticOrbitRemaining(phase){return 100-artisticOrbitProgress(phase);}
 export function artisticHemisphere(coordinates){const latitude=Number(coordinates?.[1]);if(!Number.isFinite(latitude)||Math.abs(latitude)<.05)return 'artistic equator';return latitude>0?'artistic northern hemisphere':'artistic southern hemisphere';}
+export function artisticObserverRelation(observer,ground){const a=Number(observer?.[1]),b=Number(ground?.[1]);if(!Number.isFinite(a)||!Number.isFinite(b))return 'artistic hemisphere relation unknown';if(Math.abs(a)<.05||Math.abs(b)<.05)return 'artistic equator crossing';return Math.sign(a)===Math.sign(b)?'same artistic hemisphere':'opposite artistic hemispheres';}
 export function customObserver(longitude,latitude){
   if(longitude===''||latitude==='')return null;
   const lon=Number(longitude),lat=Number(latitude);

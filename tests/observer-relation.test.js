@@ -1,0 +1,2 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {artisticObserverRelation} from '../src/model.js';
+test('observer relation stays explicitly artistic',()=>{assert.equal(artisticObserverRelation([-79,44],[10,20]),'same artistic hemisphere');assert.equal(artisticObserverRelation([-79,44],[10,-20]),'opposite artistic hemispheres');assert.equal(artisticObserverRelation([-79,44],[10,0]),'artistic equator crossing');assert.equal(artisticObserverRelation(null,[10,20]),'artistic hemisphere relation unknown');});
