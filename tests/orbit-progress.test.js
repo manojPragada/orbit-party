@@ -1,0 +1,1 @@
+import {test} from 'node:test';import assert from 'node:assert/strict';import {artisticOrbitProgress} from '../src/model.js';test('artistic progress wraps',()=>{assert.equal(artisticOrbitProgress(0),0);assert.equal(artisticOrbitProgress(180),50);assert.equal(artisticOrbitProgress(450),25);});
