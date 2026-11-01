@@ -27,6 +27,7 @@ export function artisticOrbitProgress(phase){const value=Number(phase);return Nu
 export function artisticOrbitRemaining(phase){return 100-artisticOrbitProgress(phase);}
 export function artisticHemisphere(coordinates){const latitude=Number(coordinates?.[1]);if(!Number.isFinite(latitude)||Math.abs(latitude)<.05)return 'artistic equator';return latitude>0?'artistic northern hemisphere':'artistic southern hemisphere';}
 export function artisticObserverRelation(observer,ground){const a=Number(observer?.[1]),b=Number(ground?.[1]);if(!Number.isFinite(a)||!Number.isFinite(b))return 'artistic hemisphere relation unknown';if(Math.abs(a)<.05||Math.abs(b)<.05)return 'artistic equator crossing';return Math.sign(a)===Math.sign(b)?'same artistic hemisphere':'opposite artistic hemispheres';}
+export function artisticMapQuadrant(coordinates){const longitude=Number(coordinates?.[0]),latitude=Number(coordinates?.[1]);if(!Number.isFinite(longitude)||!Number.isFinite(latitude))return 'artistic map quadrant unknown';const vertical=Math.abs(latitude)<.05?'equatorial':latitude>0?'north':'south';const horizontal=Math.abs(longitude)<.05?'central':longitude>0?'east':'west';return `${vertical}-${horizontal} artistic map quadrant`;}
 export function customObserver(longitude,latitude){
   if(longitude===''||latitude==='')return null;
   const lon=Number(longitude),lat=Number(latitude);
