@@ -14,6 +14,8 @@
 
 ## Continuity
 
+2026-11-02: Added an explicitly illustrated latitude gap between the observer and artistic ground point. It remains coordinate context only—not elevation, range, visibility or pass prediction. Next: verified TLE/SGP4 work before any real orbital claim.
+
 2026-11-01: Added wrapped degrees remaining to the explicitly artistic cycle reset without converting phase into time or a pass prediction. Next: verified TLE/SGP4 work before any real orbital claim.
 
 2026-10-31: Added an explicitly artistic north/south/equatorial and east/west/central map-quadrant label for the illustrated ground point. It remains separate from propagation, visibility and pass claims. Next: verified TLE/SGP4 work before any real orbital claim.
