@@ -4,7 +4,7 @@ A cinematic orbital explorer with animated demo satellites, ground tracks and an
 
 **Status:** working static prototype, no hosted deployment. See limitations below. This project uses no external assets, fonts, runtime dependencies, API keys or paid services.
 
-Current illustration increment: observer context includes an illustrated latitude gap alongside spherical ground separation, never elevation, visibility or a pass prediction.
+Current illustration increment: observer context gives the direction and size of the illustrated latitude offset alongside spherical ground separation, never elevation, visibility or a pass prediction.
 
 ## Quick start
 

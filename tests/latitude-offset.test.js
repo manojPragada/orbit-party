@@ -1,0 +1,2 @@
+import {test} from 'node:test';import assert from 'node:assert/strict';import {artisticLatitudeOffset} from '../src/model.js';
+test('artistic latitude offset keeps direction descriptive',()=>{assert.equal(artisticLatitudeOffset([0,10],[0,25]),'15.0° north of observer latitude');assert.equal(artisticLatitudeOffset([0,10],[0,-5]),'15.0° south of observer latitude');assert.equal(artisticLatitudeOffset([0,10],[0,10.01]),'same illustrated latitude as observer');assert.match(artisticLatitudeOffset(null,[0,2]),/unavailable/);});
