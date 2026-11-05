@@ -1,0 +1,2 @@
+import {test} from 'node:test';import assert from 'node:assert/strict';import {artisticLongitudeOffset} from '../src/model.js';
+test('artistic longitude offset takes the wrapped descriptive direction',()=>{assert.equal(artisticLongitudeOffset([170,0],[-170,0]),'20.0° east of observer longitude');assert.equal(artisticLongitudeOffset([-170,0],[170,0]),'20.0° west of observer longitude');assert.equal(artisticLongitudeOffset([10,0],[10.01,0]),'same illustrated longitude as observer');assert.match(artisticLongitudeOffset(null,[0,0]),/unavailable/);});
