@@ -1,0 +1,2 @@
+import {test} from 'node:test';import assert from 'node:assert/strict';import {artisticRelativeQuadrant} from '../src/model.js';
+test('relative quadrant is wrapped and explicitly illustrative',()=>{assert.equal(artisticRelativeQuadrant([170,10],[-170,25]),'north-east of observer in illustration');assert.equal(artisticRelativeQuadrant([-170,10],[170,-5]),'south-west of observer in illustration');assert.equal(artisticRelativeQuadrant([10,10],[10.01,10.01]),'level-aligned of observer in illustration');assert.match(artisticRelativeQuadrant(null,[0,0]),/unavailable/);});

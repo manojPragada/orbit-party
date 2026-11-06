@@ -14,6 +14,8 @@
 
 ## Continuity
 
+2026-11-05: Combined the wrapped longitude and latitude offsets into an explicitly illustrated observer-relative quadrant. It remains coordinate context—not a bearing, elevation, visibility or pass prediction. Next: verified TLE/SGP4 work before any real orbital claim.
+
 2026-11-04: Added an explicitly artistic wrapped east/west longitude offset from the selected observer to the illustrated ground point. It remains coordinate context—not range, visibility or pass prediction. Next: verified TLE/SGP4 work before any real orbital claim.
 
 2026-11-03: Added an explicitly artistic north/south latitude offset from the selected observer to the illustrated ground point. It remains coordinate context—not elevation, range, visibility or pass prediction. Next: verified TLE/SGP4 work before any real orbital claim.
