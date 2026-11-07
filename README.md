@@ -4,7 +4,7 @@ A cinematic orbital explorer with animated demo satellites, ground tracks and an
 
 **Status:** working static prototype, no hosted deployment. See limitations below. This project uses no external assets, fonts, runtime dependencies, API keys or paid services.
 
-Current illustration increment: observer context combines wrapped longitude and latitude offsets into an explicitly illustrated relative quadrant alongside spherical ground separation, never elevation, visibility or a pass prediction.
+Current illustration increment: a keyboard-accessible Reset observer action clears custom coordinates and restores the bundled Toronto illustration without storing location data or implying a pass prediction.
 
 ## Quick start
 

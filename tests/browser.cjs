@@ -9,6 +9,7 @@ const mime={'.html':'text/html','.css':'text/css','.js':'text/javascript','.geoj
 async function scenario(page,base,reduced){
   await page.locator('#observer').selectOption('sydney');assert.match(await page.locator('#separation').textContent(),/Sydney · not a pass prediction/);
   await page.locator('#observer-lon').fill('-79.38');await page.locator('#observer-lat').fill('43.65');await page.locator('#apply-observer').click();assert.match(await page.locator('#separation').textContent(),/Custom observer · not a pass prediction/);
+  await page.locator('#reset-observer').click();assert.match(await page.locator('#separation').textContent(),/Toronto · not a pass prediction/);assert.equal(await page.locator('#observer-lon').inputValue(),'');
   await page.locator('#observer-lat').fill('91');await page.locator('#apply-observer').click();assert.match(await page.locator('#separation').textContent(),/latitude from -90 to 90/);
 
   await page.locator('#list button').nth(1).click();assert.equal(await page.locator('#name').textContent(),'Polar explorer');
