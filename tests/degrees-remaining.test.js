@@ -1,0 +1,2 @@
+import {test} from 'node:test';import assert from 'node:assert/strict';import {artisticDegreesRemaining} from '../src/model.js';
+test('artistic degrees remaining wraps without implying time',()=>{assert.equal(artisticDegreesRemaining(0),360);assert.equal(artisticDegreesRemaining(90),270);assert.equal(artisticDegreesRemaining(359),1);assert.equal(artisticDegreesRemaining(-90),90);assert.equal(artisticDegreesRemaining('bad'),360);});
