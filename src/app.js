@@ -3,12 +3,13 @@ const $ = selector => document.querySelector(selector);
 const reduced = matchMedia('(prefers-reduced-motion: reduce)');
 const initial=viewFromURL(location.href);let selected = initial.satellite, playing = false, previous = null, frame = null, appliedObserver = null;
 $('#phase').value=initial.phase;
-function syncURL(){const url=new URL(location.href);url.searchParams.set('satellite',selected.id);url.searchParams.set('phase',Math.round(Number($('#phase').value)));history.replaceState(null,'',url);}
+function syncURL(){const url=new URL(location.href);url.searchParams.set('satellite',selected.id);url.searchParams.set('phase',Math.round(Number($('#phase').value)));if(appliedObserver)url.searchParams.delete('observer');else url.searchParams.set('observer',$('#observer')?.value??initial.observer.id);history.replaceState(null,'',url);}
 const ns = 'http://www.w3.org/2000/svg';
 const dot = document.createElementNS(ns, 'circle'); dot.setAttribute('r',8); dot.setAttribute('class','marker'); $('#markers').append(dot);
 const observerDot=document.createElementNS(ns,'circle');observerDot.setAttribute('r',5);observerDot.setAttribute('class','observer-marker');$('#markers').append(observerDot);
 const terminator=document.createElementNS(ns,'line');terminator.id='terminator';terminator.setAttribute('y1','0');terminator.setAttribute('y2','400');terminator.setAttribute('class','terminator');$('.land').before(terminator);
 const observerLabel=document.createElement('label');observerLabel.textContent='Observer ';const observerSelect=document.createElement('select');observerSelect.id='observer';for(const item of observers){const option=document.createElement('option');option.value=item.id;option.textContent=item.name;observerSelect.append(option);}observerLabel.append(observerSelect);$('.controls').append(observerLabel);
+observerSelect.value=initial.observer.id;
 const coordinateGroup=document.createElement('div');coordinateGroup.className='coordinate-inputs';coordinateGroup.innerHTML='<label>Longitude <input id="observer-lon" type="number" min="-180" max="180" step="0.01" inputmode="decimal" placeholder="-79.38"></label><label>Latitude <input id="observer-lat" type="number" min="-90" max="90" step="0.01" inputmode="decimal" placeholder="43.65"></label><button id="apply-observer" type="button">Use coordinates</button><button id="reset-observer" type="button">Reset observer</button>';$('.controls').append(coordinateGroup);
 const separation=document.createElement('p');separation.id='separation';separation.className='status';separation.setAttribute('aria-live','polite');$('#coordinates').after(separation);
 function drawPosition() {
@@ -49,13 +50,13 @@ $('#play').addEventListener('click',()=>{
   $('#playback-status').textContent='Playing an artistic track, not a predicted satellite position.';frame=requestAnimationFrame(tick);
 });
 $('#phase').addEventListener('input',()=>{stop();drawPosition();syncURL();});
-$('#observer').addEventListener('change',()=>{appliedObserver=null;drawPosition();});
+$('#observer').addEventListener('change',()=>{appliedObserver=null;drawPosition();syncURL();});
 $('#apply-observer').addEventListener('click',()=>{
   const observer=customObserver($('#observer-lon').value,$('#observer-lat').value);
   if(!observer){$('#separation').textContent='Enter longitude from -180 to 180 and latitude from -90 to 90.';return;}
-  appliedObserver=observer;drawPosition();
+  appliedObserver=observer;drawPosition();syncURL();
 });
-$('#reset-observer').addEventListener('click',()=>{appliedObserver=null;$('#observer').value=observers[0].id;$('#observer-lon').value='';$('#observer-lat').value='';drawPosition();$('#observer').focus();});
+$('#reset-observer').addEventListener('click',()=>{appliedObserver=null;$('#observer').value=observers[0].id;$('#observer-lon').value='';$('#observer-lat').value='';drawPosition();syncURL();$('#observer').focus();});
 for(const [id,delta] of [['#step-back',-15],['#step-forward',15]])$(id).addEventListener('click',()=>{
   stop();$('#phase').value=((Number($('#phase').value)+delta)%360+360)%360;drawPosition();syncURL();
 });

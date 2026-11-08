@@ -15,8 +15,9 @@ export function viewFromURL(value) {
     const params=new URL(value,'https://orbit.invalid/').searchParams;
     const satellite=satellites.find(item=>item.id===params.get('satellite'))??satellites[0];
     const raw=Number(params.get('phase'));const phase=Number.isFinite(raw)?((raw%360)+360)%360:0;
-    return {satellite,phase};
-  } catch { return {satellite:satellites[0],phase:0}; }
+    const observer=observers.find(item=>item.id===params.get('observer'))??observers[0];
+    return {satellite,phase,observer};
+  } catch { return {satellite:satellites[0],phase:0,observer:observers[0]}; }
 }
 export function angularSeparation([lonA,latA],[lonB,latB]){const rad=Math.PI/180;const a=latA*rad,b=latB*rad,delta=(lonB-lonA)*rad;const cosine=Math.sin(a)*Math.sin(b)+Math.cos(a)*Math.cos(b)*Math.cos(delta);return Math.acos(Math.max(-1,Math.min(1,cosine)))/rad;}
 export function formatCoordinate([lon,lat]){const latitude=`${Math.abs(lat).toFixed(1)}°${lat<0?'S':'N'}`,longitude=`${Math.abs(lon).toFixed(1)}°${lon<0?'W':'E'}`;return `${latitude} / ${longitude}`;}

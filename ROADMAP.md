@@ -14,6 +14,8 @@
 
 ## Continuity
 
+2026-11-07: Added tested shareable URL state for bundled observer presets while deliberately omitting custom coordinates. The state remains artistic context, not a location lookup or pass prediction. Next: verified TLE/SGP4 work before any real orbital claim.
+
 2026-11-06: Added an accessible Reset observer action that clears ephemeral custom coordinates and restores the bundled Toronto illustration. It remains artistic coordinate context—not a location lookup or pass prediction. Next: verified TLE/SGP4 work before any real orbital claim.
 
 2026-11-05: Combined the wrapped longitude and latitude offsets into an explicitly illustrated observer-relative quadrant. It remains coordinate context—not a bearing, elevation, visibility or pass prediction. Next: verified TLE/SGP4 work before any real orbital claim.
