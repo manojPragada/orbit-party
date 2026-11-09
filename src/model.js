@@ -19,6 +19,7 @@ export function viewFromURL(value) {
     return {satellite,phase,observer};
   } catch { return {satellite:satellites[0],phase:0,observer:observers[0]}; }
 }
+export function shareViewURL(value,{satellite,phase,observer}={}){try{const url=new URL(value,'https://orbit.invalid/'),knownSatellite=satellites.find(item=>item.id===satellite)??satellites[0],raw=Number(phase),normalized=Number.isFinite(raw)?((raw%360)+360)%360:0;url.searchParams.set('satellite',knownSatellite.id);url.searchParams.set('phase',String(Math.round(normalized)));if(observers.some(item=>item.id===observer))url.searchParams.set('observer',observer);else url.searchParams.delete('observer');return url.href;}catch{return null;}}
 export function angularSeparation([lonA,latA],[lonB,latB]){const rad=Math.PI/180;const a=latA*rad,b=latB*rad,delta=(lonB-lonA)*rad;const cosine=Math.sin(a)*Math.sin(b)+Math.cos(a)*Math.cos(b)*Math.cos(delta);return Math.acos(Math.max(-1,Math.min(1,cosine)))/rad;}
 export function formatCoordinate([lon,lat]){const latitude=`${Math.abs(lat).toFixed(1)}°${lat<0?'S':'N'}`,longitude=`${Math.abs(lon).toFixed(1)}°${lon<0?'W':'E'}`;return `${latitude} / ${longitude}`;}
 export function artisticTerminatorX(phase){const value=Number(phase);return Number.isFinite(value)?(((value%360)+360)%360)/360*800:0;}

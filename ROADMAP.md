@@ -14,6 +14,8 @@
 
 ## Continuity
 
+2026-11-08: Added a conventional permalink backed by a tested artistic-view serializer. It normalizes satellite and phase, includes only bundled observer presets, and always omits ephemeral custom coordinates. Next: verified TLE/SGP4 work before any real orbital claim.
+
 2026-11-07: Added tested shareable URL state for bundled observer presets while deliberately omitting custom coordinates. The state remains artistic context, not a location lookup or pass prediction. Next: verified TLE/SGP4 work before any real orbital claim.
 
 2026-11-06: Added an accessible Reset observer action that clears ephemeral custom coordinates and restores the bundled Toronto illustration. It remains artistic coordinate context—not a location lookup or pass prediction. Next: verified TLE/SGP4 work before any real orbital claim.
