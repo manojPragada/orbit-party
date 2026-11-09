@@ -1,0 +1,2 @@
+import {test} from 'node:test';import assert from 'node:assert/strict';import {artisticMapQuadrant} from '../src/model.js';
+test('artistic map quadrants remain descriptive',()=>{assert.equal(artisticMapQuadrant([45,20]),'north-east artistic map quadrant');assert.equal(artisticMapQuadrant([-45,-20]),'south-west artistic map quadrant');assert.equal(artisticMapQuadrant([0,0]),'equatorial-central artistic map quadrant');assert.equal(artisticMapQuadrant([]),'artistic map quadrant unknown');});
