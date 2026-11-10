@@ -1,7 +1,7 @@
 # Orbit Party
 A cinematic offline satellite and overhead-pass explorer.
 
-**Status:** working calculated-data demo. Three fictional satellites, selectable orbital paths, motion pause, a keyboard-operable timeline, observer presets and synthetic pass cards are implemented. There is no TLE/live feed, observed position or hosted demo.
+**Status:** working calculated-data demo. Three fictional satellites, selectable orbital paths, motion pause, a keyboard-operable timeline, observer presets, validated manual coordinates and synthetic pass cards are implemented. There is no TLE/live feed, observed position or hosted demo.
 
 ## Run and verify
 Requires Node.js 22+ and npm 11+.

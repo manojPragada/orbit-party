@@ -1,6 +1,8 @@
 import './styles.css'
 import './timeline.css'
+import './manualLocation.css'
 import { locations, normalizeMinutes, passesFor, position, satellites, type Location, type Satellite } from './orbits'
+import { mountManualLocation } from './manualLocation'
 
 const root = document.querySelector<HTMLDivElement>('#app')!
 let selected = satellites[0], location = locations[0], minutes = 0
@@ -17,6 +19,7 @@ function render() {
   document.querySelectorAll<HTMLElement>('[data-sat]').forEach(element => element.addEventListener('click', () => { selected = satellites.find(satellite => satellite.id === element.dataset.sat) ?? selected; render() }))
   document.querySelector<HTMLSelectElement>('#location')?.addEventListener('change', event => { location = locations.find(item => item.id === (event.target as HTMLSelectElement).value) ?? location; render() })
   document.querySelector<HTMLInputElement>('#timeline')?.addEventListener('input', event => { minutes = normalizeMinutes(Number((event.target as HTMLInputElement).value)); playing = false; render(); document.querySelector<HTMLInputElement>('#timeline')?.focus() })
+  mountManualLocation(location, next => { location = next; render() })
 }
 
 function tick() {
