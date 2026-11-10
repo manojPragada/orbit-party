@@ -1,2 +1,3 @@
-import{describe,expect,it}from'vitest';import{locations,passesFor,position,satellites}from'./orbits'
+import{describe,expect,it}from'vitest';import{locations,normalizeMinutes,passesFor,position,satellites}from'./orbits'
 describe('calculated demo',()=>{it('keeps positions inside the display globe',()=>{for(const sat of satellites){const p=position(sat,42);expect(p.x).toBeGreaterThanOrEqual(0);expect(p.x).toBeLessThanOrEqual(100);expect(sat.source).toBe('calculated-demo')}});it('labels every pass calculation',()=>{expect(passesFor(locations[0]).every(p=>p.source==='calculated-demo')).toBe(true)})})
+describe('timeline',()=>{it('rounds and bounds manual timeline values',()=>{expect(normalizeMinutes(-20)).toBe(0);expect(normalizeMinutes(42.8)).toBe(43);expect(normalizeMinutes(2000)).toBe(1440)})})

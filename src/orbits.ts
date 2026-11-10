@@ -8,3 +8,4 @@ export const satellites:readonly Satellite[]=[
 export const locations:readonly Location[]=[{id:'toronto',city:'Toronto',lat:43.65,lon:-79.38},{id:'hyderabad',city:'Hyderabad',lat:17.39,lon:78.49},{id:'london',city:'London',lat:51.51,lon:-.13}]
 export function position(s:Satellite,minutes:number){const angle=(s.phase+minutes/s.periodMinutes)*Math.PI*2;return{x:50+Math.cos(angle)*37,y:50+Math.sin(angle)*Math.cos(s.inclination*Math.PI/180)*24}}
 export function passesFor(location:Location){return satellites.map((sat,index)=>({satellite:sat.name,startMinutes:18+index*27+Math.round(Math.abs(location.lat)/10),durationMinutes:4+index,maxElevation:31+index*17,source:'calculated-demo' as const}))}
+export function normalizeMinutes(value:number){return Math.max(0,Math.min(1440,Math.round(value)))}
