@@ -1,7 +1,7 @@
 # Orbit Party
 A cinematic offline satellite and overhead-pass explorer.
 
-**Status:** working calculated-data demo. Three fictional satellites, selectable orbital paths, motion pause, a keyboard-operable timeline, observer presets, validated manual coordinates and synthetic pass cards are implemented. There is no TLE/live feed, observed position or hosted demo.
+**Status:** working calculated-data demo. Three fictional satellites, selectable orbital paths, motion pause, a keyboard-operable timeline, observer presets, validated manual coordinates, synthetic pass cards and a source-state disclosure are implemented. There is no TLE/live feed, observed position or hosted demo.
 
 ## Run and verify
 Requires Node.js 22+ and npm 11+.
@@ -20,6 +20,7 @@ Every record carries `source: calculated-demo`. Positions use a deterministic ci
 ```text
 src/orbits.ts       synthetic satellite/location models and calculations
 src/main.ts         UI state, SVG scene and motion loop
+src/sourceState.ts  calculated/stale/error presentation contract
 src/styles.css      responsive cinematic system
 src/orbits.test.ts  provenance and display-bound tests
 ROADMAP.md          sequenced integration work
@@ -30,6 +31,8 @@ No environment variables or network services are used; see `.env.example`. `npm 
 
 ## Accessibility and performance
 Native buttons and a select control expose all choices, a skip link reaches pass results, and the animation can be paused. Reduced-motion visitors start with motion disabled. The scene is one compact SVG with no tile, image or model downloads.
+
+The header source disclosure explains the current calculated-fixture mode and reserves explicit unavailable states for stale elements or propagation errors. Future adapters must not keep showing a guessed position through either condition.
 
 ## Troubleshooting
 - Motion feels distracting: choose “Pause motion” or enable reduced motion in the OS.
