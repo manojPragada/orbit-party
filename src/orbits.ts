@@ -10,3 +10,4 @@ export function position(s:Satellite,minutes:number){const angle=(s.phase+minute
 export function passesFor(location:Location){return satellites.map((sat,index)=>({satellite:sat.name,startMinutes:18+index*27+Math.round(Math.abs(location.lat)/10),durationMinutes:4+index,maxElevation:31+index*17,source:'calculated-demo' as const}))}
 export function normalizeMinutes(value:number){return Math.max(0,Math.min(1440,Math.round(value)))}
 export function manualLocation(latitude:string,longitude:string):Location|null{const lat=Number(latitude),lon=Number(longitude);if(!Number.isFinite(lat)||!Number.isFinite(lon)||lat < -90||lat > 90||lon < -180||lon > 180)return null;return{id:'manual',city:`Manual ${lat.toFixed(2)}, ${lon.toFixed(2)}`,lat,lon}}
+export const observerOptions=(current:Location)=>current.id==='manual'?[current,...locations]:[...locations]
